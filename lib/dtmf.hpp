@@ -3,18 +3,28 @@
 #include "hwlib.hpp"
 
 /* This class holds the characters decoded from the MT8870 DTMF module*/
-class DTMF_data {
+class MT8870 {
 protected:
-	hwlib::string<1000> DTMF_message;
+	hwlib::target::pin_in bit_0;
+	hwlib::target::pin_in bit_1;
+	hwlib::target::pin_in bit_2;
+	hwlib::target::pin_in bit_3;
+	hwlib::target::pin_in stq;
 public:
-	DTMF_data():
-		DTMF_message("")
+	MT8870(const hwlib::target::pin_in & bit_0,
+			  const hwlib::target::pin_in & bit_1,
+			  const hwlib::target::pin_in & bit_2,
+			  const hwlib::target::pin_in & bit_3,
+			  const hwlib::target::pin_in & stq):
+		bit_0(bit_0),
+		bit_1(bit_1),
+		bit_2(bit_2),
+		bit_3(bit_3),
+		stq(stq)
 		{}
 	
-	void add(const char & DTMF_character);
-	void reset();
-	hwlib::string<1000> print();
-	
+	bool available();
+	char get();
 };
 
 #endif // DTMF_DATA_HPP

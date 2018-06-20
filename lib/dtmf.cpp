@@ -1,25 +1,17 @@
 #include "dtmf.hpp"
 
-// add a character to the DTMF message
-void DTMF_data::add(const char & DTMF_character)
+// check if a dtmf signal is available
+bool MT8870::available()
 {
-	unsigned int i = 0; // iterator for char array
-	while (DTMF_message[i] != '\0' && i < 1000){
-		++i;
-		if (DTMF_message[i] == '\0' && i < 1000){
-			DTMF_message += DTMF_character;
-		}
+	if (stq.get()){
+		return 1;
+	}
+	else{
+		return 0;
 	}
 }
 
-// clear the DTMF message
-void DTMF_data::reset()
+char MT8870::get()
 {
-	DTMF_message = ""; // empty string
-}
-
-// return the DTMF message to the caller
-hwlib::string<1000> DTMF_data::print()
-{
-	return DTMF_message;
+	return bit_3.get() << 3 | bit_2.get() << 2 | bit_1.get() << 1 | bit_0.get(); 
 }
