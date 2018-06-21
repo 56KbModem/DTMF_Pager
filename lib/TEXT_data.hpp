@@ -5,7 +5,7 @@
 class TEXT_data : public MT8870{
 private:
 	/* DTMF keypad */
-	uint8_t keys[16] = {'D', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#', 'A', 'B', 'C'};
+	char keys[16] = {'D', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#', 'A', 'B', 'C'};
 	hwlib::string<1000> DTMF_message;
 	hwlib::string<1000> TEXT_message;
 	
@@ -23,7 +23,7 @@ public:
 		{}
 		
 	hwlib::string<1000> print();
-	void add(const char & c);
+	void add(const uint8_t & MT8870_signal);
 	void reset();
 };
 

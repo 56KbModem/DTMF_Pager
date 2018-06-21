@@ -30,15 +30,16 @@ int main(int argc, char **argv)
 	
    while(1){
 		if (DTMF.available()){
-			char c = DTMF.get();
+			uint8_t c = DTMF.get();
 			
 			if (c == 0){
 				hwlib::cout << "message: " << DTMF.print() << '\n';
+				DTMF.reset();
 			}
 			else {
 				DTMF.add(c);
 			}
-			hwlib::wait_ms(50);
+			hwlib::wait_ms(130);
 		}
    }
 }

@@ -7,18 +7,20 @@ hwlib::string<1000> TEXT_data::print()
 	char last_char = DTMF_message[0]; // last char that was seen
 	hwlib::string<20> substring = ""; // substring to decode into character
 	
-	while (DTMF_message[cur_pos] != 0 && cur_pos < 10){
+	while (DTMF_message[cur_pos] != 'D' && cur_pos < DTMF_message.length()){
 		
-		while(DTMF_message[cur_pos] == last_char){
+		if (DTMF_message[cur_pos] == last_char){
 			last_char = DTMF_message[cur_pos];
 			substring += DTMF_message[cur_pos];
 			cur_pos++;
+		}else{
+			hwlib::cout << "before decoding\n";
+			TEXT_message += decode(substring) ; // decode to value
+			hwlib::cout << "substring: " << substring << '\n';
+			cur_pos++;
+			last_char = DTMF_message[cur_pos];
+			substring = DTMF_message[cur_pos];
 		}
-		hwlib::cout << "before decoding\n";
-		TEXT_message += decode(substring); // decode to value
-		hwlib::cout << "substring: " << substring << '\n';
-		substring = ""; // clear the substring 
-		cur_pos++;
 	}
 	return TEXT_message;
 }
@@ -66,15 +68,16 @@ char TEXT_data::decode(const hwlib::string<20> & substring)
 
 char TEXT_data::get_phone_char(const int & size, const hwlib::string<20> & button)
 {
-	return button[size % button.length()];
+	return button[size-1 % button.length()];
 }
 
 void TEXT_data::reset()
 {
+	DTMF_message = "";
 	TEXT_message = "";
 }
 
-void TEXT_data::add(const char & c)
+void TEXT_data::add(const uint8_t & c)
 {
-	DTMF_message += c;
+	DTMF_message += keys[c];
 }

@@ -2,7 +2,7 @@
 #define DTMF_DATA_HPP
 #include "hwlib.hpp"
 
-/* This class holds the characters decoded from the MT8870 DTMF module*/
+/* This class implements a 5-wire interface to the MT8870 DTMF module*/
 class MT8870 {
 protected:
 	hwlib::target::pin_in bit_0;
@@ -24,7 +24,7 @@ public:
 		{}
 	
 	bool available();
-	char get();
+	uint8_t get();
 };
 
 #endif // DTMF_DATA_HPP
