@@ -7,7 +7,7 @@ hwlib::string<1000> TEXT_data::print()
 	char last_char = DTMF_message[0]; // last char that was seen
 	hwlib::string<20> substring = ""; // substring to decode into character
 	
-	while (DTMF_message[cur_pos] != 'D' && cur_pos < DTMF_message.length()){
+	while (DTMF_message[cur_pos] != 'D' && cur_pos <= DTMF_message.length()){
 		
 		if (DTMF_message[cur_pos] == last_char){
 			last_char = DTMF_message[cur_pos];
