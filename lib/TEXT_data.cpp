@@ -79,5 +79,10 @@ void TEXT_data::reset()
 
 void TEXT_data::add(const uint8_t & MT8870_signal)
 {
+<<<<<<< HEAD
 	DTMF_message += keys[MT8870_signal];
 }
+=======
+	DTMF_message += keys[c];
+}
+>>>>>>> 14c95e77941f7d79b4520ddc04c821e9729d638b
