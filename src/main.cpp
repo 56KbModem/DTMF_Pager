@@ -21,25 +21,26 @@ int main(int argc, char **argv)
 	auto pin3 = target::pin_in(target::pins::d33);
 
 	// instance of MT8870 chip class
-	TEXT_data DTMF(pin0,pin1,pin2,pin3,STQ_pin);
+	MT8870 DTMF(pin0,pin1,pin2,pin3,STQ_pin);
+	
+	// instance of TEXT_data object
+	TEXT_data user_message(DTMF);
 
 	hwlib::wait_ms(1000); // wait a second for serial comm
-	
-	hwlib::string<100> test_string = "";
-	
 	
    while(1){
 		if (DTMF.available()){
 			uint8_t c = DTMF.get();
 			
 			if (c == 0){
-				hwlib::cout << "message: " << DTMF.print() << '\n';
-				DTMF.reset();
+				hwlib::cout << "message: " << user_message.print() << '\n';
+				user_message.reset();
 			}
 			else {
-				DTMF.add(c);
+				user_message.add(c);
 			}
 			hwlib::wait_ms(130);
 		}
    }
 }
+  

@@ -7,15 +7,14 @@ hwlib::string<1000> TEXT_data::print()
 	char last_char = DTMF_message[0]; // last char that was seen
 	hwlib::string<20> substring = ""; // substring to decode into character
 	
-	while (DTMF_message[cur_pos] != 'D' && cur_pos < DTMF_message.length()){
+	while (cur_pos <= DTMF_message.length()){
 		
 		if (DTMF_message[cur_pos] == last_char){
 			last_char = DTMF_message[cur_pos];
 			substring += DTMF_message[cur_pos];
 			cur_pos++;
 		}else{
-			hwlib::cout << "before decoding\n";
-			TEXT_message += decode(substring) ; // decode to value
+			TEXT_message += decode(substring); // decode to value
 			hwlib::cout << "substring: " << substring << '\n';
 			cur_pos++;
 			last_char = DTMF_message[cur_pos];
@@ -66,9 +65,9 @@ char TEXT_data::decode(const hwlib::string<20> & substring)
 	return button;
 }
 
-char TEXT_data::get_phone_char(const int & size, const hwlib::string<20> & button)
+char TEXT_data::get_phone_char(const unsigned int & size, const hwlib::string<20> & button)
 {
-	return button[size-1 % button.length()];
+		return button[size-1 % button.length()];
 }
 
 void TEXT_data::reset()
@@ -79,10 +78,5 @@ void TEXT_data::reset()
 
 void TEXT_data::add(const uint8_t & MT8870_signal)
 {
-<<<<<<< HEAD
 	DTMF_message += keys[MT8870_signal];
 }
-=======
-	DTMF_message += keys[c];
-}
->>>>>>> 14c95e77941f7d79b4520ddc04c821e9729d638b
