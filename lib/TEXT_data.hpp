@@ -13,7 +13,7 @@ private:
 	hwlib::string<1000> TEXT_message;
 	
 	char decode(const hwlib::string<20> & substring);
-	char get_phone_char(const unsigned int & size, const hwlib::string<20> & button);
+	char get_phone_char(const signed int & size, const hwlib::string<20> & button);
 public:
 	TEXT_data(const MT8870 & DTMF_Module):
 		DTMF_Module(DTMF_Module),

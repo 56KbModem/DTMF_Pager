@@ -62,17 +62,22 @@ char TEXT_data::decode(const hwlib::string<20> & substring)
 			return get_phone_char(substring.length(), E_161[7]);
 			break;
 	}
-	return button;
+	return '.';
 }
 
-char TEXT_data::get_phone_char(const unsigned int & size, const hwlib::string<20> & button)
+char TEXT_data::get_phone_char(const signed int & size, const hwlib::string<20> & button)
 {
-		return button[size-1 % button.length()];
+	int index = (size % button.length()) - 1;
+	if (index < 0){
+		index = button.length() -1;
+	}
+	hwlib::cout << size << " mod " << button.length() << " = " << index << '\n';
+	return button[index];
 }
 
 void TEXT_data::reset()
 {
-	DTMF_message = "";
+	DTMF_message = ""; 
 	TEXT_message = "";
 }
 

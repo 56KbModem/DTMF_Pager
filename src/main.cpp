@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 			else {
 				user_message.add(c);
 			}
-			hwlib::wait_ms(130);
+			hwlib::wait_ms(200);
 		}
    }
 }
