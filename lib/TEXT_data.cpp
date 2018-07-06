@@ -16,9 +16,9 @@ hwlib::string<1000> TEXT_data::print()
 		}else{
 			TEXT_message += decode(substring); // decode to value
 			hwlib::cout << "substring: " << substring << '\n';
-			cur_pos++;
 			last_char = DTMF_message[cur_pos];
 			substring = DTMF_message[cur_pos];
+			cur_pos++;
 		}
 	}
 	return TEXT_message;
