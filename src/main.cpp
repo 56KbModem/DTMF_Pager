@@ -1,5 +1,4 @@
-//#include <iostream>
- #include "hwlib.hpp"
+#include "hwlib.hpp"
 #include "dtmf.hpp"
 #include "TEXT_data.hpp"
 
@@ -9,7 +8,7 @@ int main(int argc, char **argv)
 {
 
 	// kill the watchdog
-   WDT->WDT_MR = WDT_MR_WDDIS;
+	WDT->WDT_MR = WDT_MR_WDDIS;
       
 	// StQ pin (high when a DTMF tone is available)
 	auto STQ_pin = target::pin_in(target::pins::d50);
@@ -27,12 +26,16 @@ int main(int argc, char **argv)
 	TEXT_data user_message(DTMF);
 
 	hwlib::wait_ms(1000); // wait a second for serial comm
-	
-   while(1){
+
+	/* Main control loop, must never exit (embedded application). *
+	 * in this loop we will continously wait for a DTMF signal,   *
+	 * if a signal is present we will add it to the user message  *
+	 * or we will print the message when a DTMF 'D' is detected   */
+	while(1){
 		if (DTMF.available()){
 			uint8_t c = DTMF.get();
 			
-			if (c == 0){
+			if (c == 0){	// DTMF D
 				hwlib::cout << "message: " << user_message.print() << '\n';
 				user_message.reset();
 			}
