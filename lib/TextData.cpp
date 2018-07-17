@@ -9,16 +9,21 @@ hwlib::string<1000> TextData::print()
 	/* Loop as long as there are characters in the DTMF message */
 	while (cur_pos <= DTMF_message.length()){
 		
+		if (DTMF_message[cur_pos] == 'C'){ // splitted substring
+			TEXT_message += decode_key_num(substring);
+			hwlib::cout << "substring: " << substring << '\n';
+			cur_pos++;
+			last_char = DTMF_message[cur_pos];
+			substring = "";
+		}
+		
 		/* Create a substring to decode */
-		if (DTMF_message[cur_pos] == last_char){
+		else if (DTMF_message[cur_pos] == last_char){
 			last_char = DTMF_message[cur_pos];
 			substring += DTMF_message[cur_pos];
 			cur_pos++;
 		}
-		else if (DTMF_message[cur_pos] == '%'){ // splitted substring
-			TEXT_message += decode_key_num(substring);
-			cur_pos++;
-		}
+		
 		else{
 			TEXT_message += decode_key_num(substring); // decode to value
 			hwlib::cout << "substring: " << substring << '\n';

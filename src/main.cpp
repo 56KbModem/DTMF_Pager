@@ -40,11 +40,6 @@ int main(int argc, char **argv)
 				hwlib::cout << "message: " << user_message.print() << '\n';
 				user_message.reset();
 			}
-			
-			else if (c == 15){ // DTMF C
-				user_message.add('%');
-			}
-			
 			else{
 				user_message.add(c);
 			}
