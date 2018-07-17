@@ -1,6 +1,6 @@
 #include "hwlib.hpp"
 #include "dtmf.hpp"
-#include "TEXT_data.hpp"
+#include "TextData.hpp"
 
 namespace target = hwlib::target;
 
@@ -22,8 +22,8 @@ int main(int argc, char **argv)
 	// instance of MT8870 chip class
 	MT8870 DTMF(pin0,pin1,pin2,pin3,STQ_pin);
 	
-	// instance of TEXT_data object
-	TEXT_data user_message(DTMF);
+	// instance of TextData object
+	TextData user_message(DTMF);
 
 	hwlib::wait_ms(1000); // wait a second for serial comm
 
@@ -36,13 +36,20 @@ int main(int argc, char **argv)
 			uint8_t c = DTMF.get();
 			
 			if (c == 0){	// DTMF D
+				hwlib::cout << "raw data: " << user_message.print_raw() << '\n';
 				hwlib::cout << "message: " << user_message.print() << '\n';
 				user_message.reset();
 			}
-			else {
+			
+			else if (c == 15){ // DTMF C
+				user_message.add('%');
+			}
+			
+			else{
 				user_message.add(c);
 			}
-			hwlib::wait_ms(200);
+			
+			hwlib::wait_ms(120);
 		}
    }
 }

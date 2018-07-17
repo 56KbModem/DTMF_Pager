@@ -1,20 +1,26 @@
-#include "TEXT_data.hpp"
+#include "TextData.hpp"
 
-hwlib::string<1000> TEXT_data::print()
+hwlib::string<1000> TextData::print()
 {
-	hwlib::cout << "STRING: " << DTMF_message << '\n';
 	unsigned int cur_pos = 0; // iterator
 	char last_char = DTMF_message[0]; // last char that was seen
 	hwlib::string<20> substring = ""; // substring to decode into character
-	
+
+	/* Loop as long as there are characters in the DTMF message */
 	while (cur_pos <= DTMF_message.length()){
 		
+		/* Create a substring to decode */
 		if (DTMF_message[cur_pos] == last_char){
 			last_char = DTMF_message[cur_pos];
 			substring += DTMF_message[cur_pos];
 			cur_pos++;
-		}else{
-			TEXT_message += decode(substring); // decode to value
+		}
+		else if (DTMF_message[cur_pos] == '%'){ // splitted substring
+			TEXT_message += decode_key_num(substring);
+			cur_pos++;
+		}
+		else{
+			TEXT_message += decode_key_num(substring); // decode to value
 			hwlib::cout << "substring: " << substring << '\n';
 			last_char = DTMF_message[cur_pos];
 			substring = DTMF_message[cur_pos];
@@ -24,8 +30,14 @@ hwlib::string<1000> TEXT_data::print()
 	return TEXT_message;
 }
 
+/* return dtmf string directly */
+hwlib::string<1000> TextData::print_raw()
+{
+	return DTMF_message;
+}
 
-char TEXT_data::decode(const hwlib::string<20> & substring)
+
+char TextData::decode_key_num(const hwlib::string<20> & substring)
 {
 	/* this array represents the ITU-T E.161 layout */
 	std::array<hwlib::string<4>, 8> E_161 = {"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
@@ -65,23 +77,23 @@ char TEXT_data::decode(const hwlib::string<20> & substring)
 	return '.';
 }
 
-char TEXT_data::get_phone_char(const signed int & size, const hwlib::string<20> & button)
+char TextData::get_phone_char(const signed int & size, const hwlib::string<20> & button)
 {
 	int index = (size % button.length()) - 1;
 	if (index < 0){
-		index = button.length() -1;
+		index = button.length() - 1;
 	}
 	hwlib::cout << size << " mod " << button.length() << " = " << index << '\n';
 	return button[index];
 }
 
-void TEXT_data::reset()
+void TextData::reset()
 {
 	DTMF_message = ""; 
 	TEXT_message = "";
 }
 
-void TEXT_data::add(const uint8_t & MT8870_signal)
+void TextData::add(const uint8_t & MT8870_signal)
 {
 	DTMF_message += keys[MT8870_signal];
 }

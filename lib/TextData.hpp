@@ -11,7 +11,7 @@
 /// It can latch in keypresses from the MT8870 module and later decode
 /// them into a string following the ITU-T E.161 standard.
 
-class TEXT_data{
+class TextData{
 private:
 	/* reference to a MT8870 module */
 	MT8870 DTMF_Module;
@@ -21,15 +21,34 @@ private:
 	hwlib::string<1000> DTMF_message;
 	hwlib::string<1000> TEXT_message;
 	
-	char decode(const hwlib::string<20> & substring);
+	/// \brief
+	/// Decode a substring.
+	/// \details
+	/// This function detects what button was pressed
+	/// and determines which sequence of characters should be looked
+	/// in to find the meant character. The user of this library should
+	/// not have to tamper with this function as it is only called by
+	/// the print function.
+	char decode_key_num(const hwlib::string<20> & substring);
+	
+	/// \brief
+	/// Return a phone character following E.161.
+	/// \details
+	/// This function takes the size of a DTMF substring and
+	/// a button substring defined in decode_key_num() and uses
+	/// modulo arithmetic to determine the right character to return.
+	/// The user of this library should not have to tamper with this
+	/// function as it is only to be used by the decode_key_num()
+	/// function.
 	char get_phone_char(const signed int & size, const hwlib::string<20> & button);
 public:
 
 	/// \brief
-	/// Constructor for the TEXT_data class.
+	/// Constructor for the TextData class.
 	/// \details
 	/// This constructor takes a reference to an MT8870 module
-	TEXT_data(const MT8870 & DTMF_Module):
+	/// and constructs an empty object (message strings are empty strings).
+	TextData(const MT8870 & DTMF_Module):
 		DTMF_Module(DTMF_Module),
 		DTMF_message(""),
 		TEXT_message("")
@@ -38,11 +57,17 @@ public:
 	/// \brief
 	/// Decode DTMF_message string and return TEXT_message string.
 	/// \details
-	/// This function uses the decode() and get_phone_char()
+	/// This function uses the decode_key_num() and get_phone_char()
 	/// functions internally to decode the numeric DTMF message string
 	/// and adds every decoded character to TEXT_message.
 	/// Finally it returns TEXT_message.
 	hwlib::string<1000> print();
+	
+	/// \brief
+	/// Return raw DTMF string.
+	/// \details
+	/// This function returns the objects DTMF string data.
+	hwlib::string<1000> print_raw();
 	
 	/// \brief
 	/// Add a number to DTMF_message.
@@ -55,7 +80,7 @@ public:
 	/// Reset message variables
 	/// \details
 	/// This function resets both DTMF_message and TEXT_message
-	/// variables in this object.
+	/// variables in this object to an empty hwlib::string.
 	void reset();
 };
 
