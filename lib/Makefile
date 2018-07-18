@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := dtmf.cpp
+SOURCES := dtmf.cpp TextData.cpp
 
 # header files in this project
-HEADERS := dtmf.hpp
+HEADERS := hwlib.hpp dtmf.hpp TextData.hpp
 
 # other places to look for files for this project
 SEARCH  := 
