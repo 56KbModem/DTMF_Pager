@@ -47,7 +47,6 @@ int main(int argc, char **argv)
 			
 			if (c == 0){	// DTMF D
 				oled.clear();
-				hwlib::cout << "raw data: " << user_message.print_raw() << '\n';
 				display << '\f' << user_message.print() << '\n' << hwlib::flush;
 				user_message.reset();
 			}

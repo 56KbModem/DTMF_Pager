@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 	}
 	else{
 		hwlib::cout << "Test 1: NOK\n";
-		hwlib::cout << "ERROR: DTMF string decoded incorrectly: " << "." << token << "." << '\n';
+		hwlib::cout << "ERROR: DTMF string decoded incorrectly: " << token << '\n';
 	}
 	
 	hwlib::cout << "Please run test_1.wav through the radio's:\n";
