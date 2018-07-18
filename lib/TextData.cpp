@@ -88,7 +88,6 @@ char TextData::get_phone_char(const signed int & size, const hwlib::string<20> &
 	if (index < 0){
 		index = button.length() - 1;
 	}
-	hwlib::cout << size << " mod " << button.length() << " = " << index << '\n';
 	return button[index];
 }
 
