@@ -20,3 +20,5 @@ __codelite.workspace
 _dummy.jpg
 bmptk_*_stack.c
 _push.bat
+_pull.bat
+update_codelite_workspace.bat

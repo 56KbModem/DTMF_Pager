@@ -15,11 +15,11 @@
 
 class MT8870 {
 protected:
-	hwlib::target::pin_in bit_0;
-	hwlib::target::pin_in bit_1;
-	hwlib::target::pin_in bit_2;
-	hwlib::target::pin_in bit_3;
-	hwlib::target::pin_in stq;
+	hwlib::target::pin_in & bit_0;
+	hwlib::target::pin_in & bit_1;
+	hwlib::target::pin_in & bit_2;
+	hwlib::target::pin_in & bit_3;
+	hwlib::target::pin_in & stq;
 public:
 
 	/// \brief
